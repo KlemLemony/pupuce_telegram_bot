@@ -5,6 +5,8 @@
 
 # если вызываешь пупуся сам, он должен недовольно ответить, что иди нахуй
 
+# проверка
+
 from aiogram import Bot, Dispatcher, types, executor
 from config import TOKEN_API
 from aiogram.dispatcher import FSMContext
