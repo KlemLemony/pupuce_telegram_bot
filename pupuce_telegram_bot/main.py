@@ -13,8 +13,10 @@ from aiogram.dispatcher import FSMContext
 from aiogram.contrib.fsm_storage.memory import MemoryStorage
 from aiogram.dispatcher.filters.state import State, StatesGroup
 import asyncio
+from apscheduler.schedulers.asyncio import AsyncIOScheduler
 
 storage: MemoryStorage = MemoryStorage()
+scheduler = AsyncIOScheduler()
 
 bot = Bot(TOKEN_API)
 dp = Dispatcher(bot,
@@ -27,8 +29,8 @@ class Form(StatesGroup):
     is_everything_ok = State()
     remember_oath = State()
 
-@dp.message_handler(commands='pupuce')
-async def start_cmd_handler(message: types.Message):
+@dp.message_handler()
+async def start_cmd_handler():
     await Form.is_everything_ok.set()
     await bot.send_message(chat_id = -954441708, text='У тебя все хорошо?')
 
@@ -57,6 +59,9 @@ async def process_remember_oath(message: types.Message, state: FSMContext):
         await message.answer("чего блять? Ты пожешь написать да или нет?")
 
     await state.finish()
+
+scheduler.add_job(start_cmd_handler, 'interval', seconds=5)
+scheduler.start()
 
 if __name__ == '__main__':
     executor.start_polling(dp,
