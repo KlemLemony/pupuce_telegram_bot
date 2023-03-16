@@ -28,8 +28,24 @@ class Form(StatesGroup):
     is_everything_ok = State()
     remember_oath = State()
 
+@dp.message_handler(text='пупусь')
+async def pupuce(message: types.Message):
+    await message.answer("че надо? Иди нахуй")
+    await asyncio.sleep(1)
+    await bot.send_sticker(chat_id = -954441708, sticker='CAACAgIAAxkBAAEIKHFkEwiKU-xDCnNIoNFwUq37X88AAVgAAjYJAAJ5XOIJQ8ZQFdq6zjcvBA')
+
+@dp.message_handler()
+async def i_do_not_understand_you(message: types.Message):
+    await message.answer("Отвали, я не хочу разговаривать")
+    await asyncio.sleep(1)
+    await bot.send_sticker(chat_id = -954441708, sticker='CAACAgIAAxkBAAEIKHNkEwnuXZE78S7NqncS2y4w0G4ylAACEgADNlhqEvnhF8xf8PntLwQ')
+
 async def start_cmd_handler(bot: Bot):
     await bot.send_message(-954441708, f'У тебя все хорошо? Да или нет?')
+
+@dp.message_handler()
+async def test(message: types.Message):
+    await message.answer("что?")
 
 @dp.message_handler(text='да')
 async def start_cmd(message: types.Message):
@@ -46,7 +62,7 @@ async def start_cmd(message: types.Message):
     await asyncio.sleep(2)
     await Form.remember_oath.set()
     await message.answer("Клятва на пальчиках в силе? Мы еще охана?")
-
+    
 @dp.message_handler(state=Form.remember_oath)
 async def process_remember_oath(message: types.Message, state: FSMContext):
     if message.text.lower() == 'да':
@@ -58,22 +74,10 @@ async def process_remember_oath(message: types.Message, state: FSMContext):
 
     await state.finish()
 
-@dp.message_handler(text='пупусь')
-async def pupuce(message: types.Message):
-    await message.answer("че надо? Иди нахуй")
-    await asyncio.sleep(1)
-    await bot.send_sticker(chat_id = -954441708, sticker='CAACAgIAAxkBAAEIKHFkEwiKU-xDCnNIoNFwUq37X88AAVgAAjYJAAJ5XOIJQ8ZQFdq6zjcvBA')
-
-@dp.message_handler()
-async def i_do_not_understand_you(message: types.Message):
-    await message.answer("Отвали")
-    await asyncio.sleep(1)
-    await bot.send_sticker(chat_id = -954441708, sticker='CAACAgIAAxkBAAEIKHNkEwnuXZE78S7NqncS2y4w0G4ylAACEgADNlhqEvnhF8xf8PntLwQ')
-
 scheduler.add_job(start_cmd_handler, 'cron',
-                  day_of_week=3,
-                  hour=17,
-                  minute=51,
+                  day_of_week=4,
+                  hour=13,
+                  minute=30,
                   kwargs={'bot': bot})
 scheduler.start()
 
