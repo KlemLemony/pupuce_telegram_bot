@@ -4,6 +4,9 @@
 # если от бота два сообщения подряд, то между ними должен быть лаг в 1 секунду
 # если вызываешь пупуся сам, он должен недовольно ответить, что иди нахуй - добавить хэндлер поверх всего, где будет просто текстово вызываться пупусь
 
+# залить на хостинг
+# привести в порядок ответы - тут нужна машина состояний
+
 
 from aiogram import Bot, Dispatcher, types, executor
 from config import TOKEN_API
@@ -34,18 +37,8 @@ async def pupuce(message: types.Message):
     await asyncio.sleep(1)
     await bot.send_sticker(chat_id = -954441708, sticker='CAACAgIAAxkBAAEIKHFkEwiKU-xDCnNIoNFwUq37X88AAVgAAjYJAAJ5XOIJQ8ZQFdq6zjcvBA')
 
-@dp.message_handler()
-async def i_do_not_understand_you(message: types.Message):
-    await message.answer("Отвали, я не хочу разговаривать")
-    await asyncio.sleep(1)
-    await bot.send_sticker(chat_id = -954441708, sticker='CAACAgIAAxkBAAEIKHNkEwnuXZE78S7NqncS2y4w0G4ylAACEgADNlhqEvnhF8xf8PntLwQ')
-
 async def start_cmd_handler(bot: Bot):
     await bot.send_message(-954441708, f'У тебя все хорошо? Да или нет?')
-
-@dp.message_handler()
-async def test(message: types.Message):
-    await message.answer("что?")
 
 @dp.message_handler(text='да')
 async def start_cmd(message: types.Message):
@@ -74,10 +67,17 @@ async def process_remember_oath(message: types.Message, state: FSMContext):
 
     await state.finish()
 
+@dp.message_handler()
+async def i_do_not_understand_you(message: types.Message):
+    await message.answer("Отвали, я не хочу разговаривать")
+    await asyncio.sleep(1)
+    await bot.send_sticker(chat_id = -954441708, sticker='CAACAgIAAxkBAAEIKHNkEwnuXZE78S7NqncS2y4w0G4ylAACEgADNlhqEvnhF8xf8PntLwQ')
+
+
 scheduler.add_job(start_cmd_handler, 'cron',
                   day_of_week=4,
-                  hour=13,
-                  minute=30,
+                  hour=10,
+                  minute=31,
                   kwargs={'bot': bot})
 scheduler.start()
 
