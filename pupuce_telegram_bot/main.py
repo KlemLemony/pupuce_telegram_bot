@@ -7,6 +7,8 @@
 # залить на хостинг
 # привести в порядок ответы - тут нужна машина состояний
 
+# проверка
+
 
 from aiogram import Bot, Dispatcher, types, executor
 from config import TOKEN_API
