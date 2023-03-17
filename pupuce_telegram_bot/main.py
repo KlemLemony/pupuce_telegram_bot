@@ -31,7 +31,7 @@ class Form(StatesGroup):
     is_everything_ok = State()
     remember_oath = State()
 
-@dp.message_handler(text='пупусь')
+@dp.message_handler(text=['пупусь', 'пу', 'pupuce'])
 async def pupuce(message: types.Message):
     await message.answer("че надо? Иди нахуй")
     await asyncio.sleep(1)
@@ -76,8 +76,8 @@ async def i_do_not_understand_you(message: types.Message):
 
 scheduler.add_job(start_cmd_handler, 'cron',
                   day_of_week=4,
-                  hour=10,
-                  minute=31,
+                  hour=15,
+                  minute=8,
                   kwargs={'bot': bot})
 scheduler.start()
 
