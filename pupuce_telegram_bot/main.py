@@ -7,7 +7,10 @@
 # залить на хостинг
 # привести в порядок ответы - тут нужна машина состояний
 
-# проверка
+# вы попытались вызвать метод для чего-то, чего не существует.
+#state = Dispatcher.get_current().current_state()
+#AttributeError: 'NoneType' object has no attribute 'current_state'
+# я пытаюсь вызвать current_state для Dispatcher.get_current()., но Dispatcher.get_current(). - вот этой штуки не существует
 
 
 from aiogram import Bot, Dispatcher, types, executor
@@ -33,7 +36,6 @@ class Form(StatesGroup):
     is_everything_ok = State()
     remember_oath = State()
 
-@dp.bot_handler()
 async def start_cmd_handler(bot: Bot):
     await bot.send_message(-954441708, f'У тебя все хорошо? Да или нет?')
     await Form.is_everything_ok.set()
@@ -43,14 +45,14 @@ async def start_cmd(message: types.Message, state: FSMContext):
     await bot.send_message(chat_id = -954441708, text='ну и чудненько')
     await asyncio.sleep(2)
     await message.answer("Клятва на пальчиках в силе? Мы еще охана?")
-    await Form.next()
+    await Form.remember_oath()
 
 @dp.message_handler(text='нет', state=Form.is_everything_ok)
 async def start_cmd(message: types.Message, state: FSMContext):
     await bot.send_message(chat_id = -954441708, text='если честно, мне все равно. Я просто спросил')
     await asyncio.sleep(2)
     await message.answer("Клятва на пальчиках в силе? Мы еще охана?")
-    await Form.next()
+    await Form.remember_oath()
     
 @dp.message_handler(state=Form.remember_oath)
 async def process_remember_oath(message: types.Message, state: FSMContext):
@@ -76,9 +78,9 @@ async def go_fuck_yourself(message: types.Message):
     await bot.send_sticker(chat_id = -954441708, sticker='CAACAgIAAxkBAAEIKHNkEwnuXZE78S7NqncS2y4w0G4ylAACEgADNlhqEvnhF8xf8PntLwQ')
 
 scheduler.add_job(start_cmd_handler, 'cron',
-                  day_of_week=4,
-                  hour=14,
-                  minute=14,
+                  day_of_week=0,
+                  hour=11,
+                  minute=21,
                   kwargs={'bot': bot})
 scheduler.start()
 
