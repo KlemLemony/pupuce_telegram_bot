@@ -3,7 +3,7 @@ from config import TOKEN_API
 from aiogram.dispatcher.filters.state import State, StatesGroup
 import asyncio
 from apscheduler.schedulers.asyncio import AsyncIOScheduler
-from datetime import datetime, timedelta #timedelta возможно удали
+from datetime import datetime
 
 scheduler = AsyncIOScheduler(timezone='Asia/Colombo')
 

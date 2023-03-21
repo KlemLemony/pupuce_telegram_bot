@@ -1,9 +1,3 @@
-# Ошибка возникает потому, что state не был передан в хэндлеры start_cmd и remember_oath. Вместо этого, state был передан в функцию
-# start_cmd_handler, которая вызывается по расписанию с помощью AsyncIOScheduler. Поэтому в момент вызова хэндлеров, переменная state
-# имеет значение None. Чтобы исправить эту ошибку, необходимо передавать state в хэндлеры напрямую, а не через start_cmd_handler. Для
-# этого можно использовать декораторы @dp.callback_query_handler() или @dp.message_handler() без аргумента state. Внутри хэндлеров
-# можно использовать FSMContext для работы со стейтами.
-
 from aiogram import Bot, Dispatcher, types, executor
 from config import TOKEN_API
 from aiogram.dispatcher import FSMContext

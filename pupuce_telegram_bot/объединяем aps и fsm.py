@@ -1,8 +1,3 @@
-# вы попытались вызвать метод для чего-то, чего не существует.
-#state = Dispatcher.get_current().current_state()
-#AttributeError: 'NoneType' object has no attribute 'current_state'
-# я пытаюсь вызвать current_state для Dispatcher.get_current()., но Dispatcher.get_current(). - вот этой штуки не существует
-
 from aiogram import Bot, Dispatcher, types, executor
 from config import TOKEN_API
 from aiogram.dispatcher import FSMContext
@@ -10,7 +5,7 @@ from aiogram.contrib.fsm_storage.memory import MemoryStorage
 from aiogram.dispatcher.filters.state import State, StatesGroup
 import asyncio
 from apscheduler.schedulers.asyncio import AsyncIOScheduler
-from datetime import datetime, timedelta #timedelta возможно удали
+#from datetime import datetime, timedelta 
 
 storage = MemoryStorage()
 bot = Bot(TOKEN_API)
@@ -23,22 +18,6 @@ async def on_startup(_):
 class Form(StatesGroup):
     is_everything_ok = State()
     remember_oath = State()
-
-#хэндлер нужен. Потому что не происходит обработки через хэндлер. И машине состояния не понимает к чему обращаться
-# т.е. бот изначально не входит в состояние is_everything_ok
-# попробуй сделать так, чтобы состояние было определено заранее
-# нам нужно написать хэндлер, который не ждет никакого сообщения
-# здесь мы не можем использовать message: types.Message, потому что параметр message обрабатывает то, что приходит из хэндлера, а нам ничего не приходит из хэндлера
-# почему машина не устанавливает состояние без хэндлера?
-# dispatcher - это обработчик.
-# проблема в том, что машина состояния работает через диспатчер. А поскольку у нас нет хэндлера, то и диспатчеру не передается состояние и он 
-# возвращает значение None
-
-# у диспатчера нет состояния
-# еще вопрос в том, может ли диспетчер бота отлавливать сообщения от самого себя?
-
-# диспетчер реагирует на любой апдейт на любое событие
-# возможно мне помогут мидлваре или вебхуки
 
 async def start_cmd_handler(bot: Bot):
     await bot.send_message(-954441708, f'У тебя все хорошо? Да или нет?')
@@ -89,9 +68,9 @@ async def go_fuck_yourself(message: types.Message):
     await bot.send_sticker(chat_id = -954441708, sticker='CAACAgIAAxkBAAEIKHNkEwnuXZE78S7NqncS2y4w0G4ylAACEgADNlhqEvnhF8xf8PntLwQ')
 
 scheduler.add_job(start_cmd_handler, trigger='cron',
-                  day_of_week=0,
-                  hour=18,
-                  minute=48,
+                  day_of_week=1,
+                  hour=11,
+                  minute=7,
                   kwargs={'bot': bot})
 scheduler.start()
 

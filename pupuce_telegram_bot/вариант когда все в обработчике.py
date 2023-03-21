@@ -1,8 +1,3 @@
-# вы попытались вызвать метод для чего-то, чего не существует.
-#state = Dispatcher.get_current().current_state()
-#AttributeError: 'NoneType' object has no attribute 'current_state'
-# я пытаюсь вызвать current_state для Dispatcher.get_current()., но Dispatcher.get_current(). - вот этой штуки не существует
-
 from aiogram import Bot, Dispatcher, types, executor
 from config import TOKEN_API
 from aiogram.dispatcher import FSMContext
@@ -10,7 +5,7 @@ from aiogram.contrib.fsm_storage.memory import MemoryStorage
 from aiogram.dispatcher.filters.state import State, StatesGroup
 import asyncio
 from apscheduler.schedulers.asyncio import AsyncIOScheduler
-from datetime import datetime, timedelta #timedelta возможно удали
+from datetime import datetime
 
 storage = MemoryStorage()
 bot = Bot(TOKEN_API)
@@ -23,14 +18,6 @@ async def on_startup(_):
 class Form(StatesGroup):
     is_everything_ok = State()
     remember_oath = State()
-
-#хэндлер нужен. Потому что не происходит обработки через хэндлер. И машине состояния не понимает к чему обращаться
-# т.е. бот изначально не входит в состояние is_everything_ok
-# попробуй сделать так, чтобы состояние было определено заранее
-# здесь мы не можем использовать message: types.Message, потому что параметр message обрабатывает то, что приходит из хэндлера, а нам ничего не приходит из хэндлера
-# хэндлер не нужен, потому что он обрабатывает действие, которое совершает пользователь, а у нас пользователь не соверхшает действий!
-# пишем просто функцию.
-# нужны midlleware
 
 async def start_cmd_handler(bot: Bot):
     await bot.send_message(-954441708, f'У тебя все хорошо? Да или нет?')
