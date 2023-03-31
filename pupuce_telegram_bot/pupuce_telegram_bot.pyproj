@@ -32,12 +32,6 @@
     <Compile Include="config.py">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="вариант когда все в обработчике.py">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="запрос к gpt.py">
-      <SubType>Code</SubType>
-    </Compile>
     <Compile Include="объединяем aps и fsm.py">
       <SubType>Code</SubType>
     </Compile>
